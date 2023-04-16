@@ -6,6 +6,7 @@ import javafx.scene.paint.Color;
 
 public class ColorFilter implements IFilter{
     private Pipe successor;
+    private Pipe predecessor;
     private Color color;
 
     public ColorFilter(Color color) {
@@ -18,8 +19,25 @@ public class ColorFilter implements IFilter{
     }
 
     @Override
+    public void setPredecessor(Pipe predecessor) {
+        this.predecessor = predecessor;
+    }
+
+    @Override
     public void write(FaceWithColor face) {
         face.setColor(color);
         successor.write(face);
+    }
+
+    @Override
+    public FaceWithColor read() {
+        FaceWithColor face = predecessor.read();
+
+        if (color == Color.PINK) {
+            return face;
+        }
+
+        face.setColor(color);
+        return face;
     }
 }
