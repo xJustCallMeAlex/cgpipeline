@@ -3,6 +3,7 @@ package at.fhv.sysarch.lab1.filters;
 import at.fhv.sysarch.lab1.obj.FaceWithColor;
 import at.fhv.sysarch.lab1.pipe.Pipe;
 import com.hackoeur.jglm.Vec4;
+import javafx.scene.paint.Color;
 
 public class BFCullingFilter implements IFilter {
     private Pipe successor;
@@ -32,10 +33,16 @@ public class BFCullingFilter implements IFilter {
     public FaceWithColor read() {
         FaceWithColor face = predecessor.read();
 
-        Vec4 v1 = face.getFace().getV1();
-        Vec4 n1 = face.getFace().getN1();
-        if (v1.dot(n1) < 0) {
-            return face;
+        if (face != null) {
+            if (face.getColor() == Color.PINK) {
+                return face;
+            }
+
+            Vec4 v1 = face.getFace().getV1();
+            Vec4 n1 = face.getFace().getN1();
+            if (v1.dot(n1) < 0) {
+                return face;
+            }
         }
         return null;
     }

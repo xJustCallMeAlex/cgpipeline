@@ -44,12 +44,19 @@ public class MVTransformationFilter implements IFilter {
     public FaceWithColor read() {
         FaceWithColor face = predecessor.read();
 
-        Vec4 v1 = transformation.multiply(face.getFace().getV1());
-        Vec4 v2 = transformation.multiply(face.getFace().getV2());
-        Vec4 v3 = transformation.multiply(face.getFace().getV3());
-        Vec4 n1 = transformation.multiply(face.getFace().getN1());
-        Vec4 n2 = transformation.multiply(face.getFace().getN2());
-        Vec4 n3 = transformation.multiply(face.getFace().getN3());
-        return new FaceWithColor(new Face(v1,v2,v3, n1,n2,n3), face.getColor());
+        if (face != null) {
+            if (face.getColor() == Color.PINK){
+                return face;
+            }
+
+            Vec4 v1 = transformation.multiply(face.getFace().getV1());
+            Vec4 v2 = transformation.multiply(face.getFace().getV2());
+            Vec4 v3 = transformation.multiply(face.getFace().getV3());
+            Vec4 n1 = transformation.multiply(face.getFace().getN1());
+            Vec4 n2 = transformation.multiply(face.getFace().getN2());
+            Vec4 n3 = transformation.multiply(face.getFace().getN3());
+            return new FaceWithColor(new Face(v1,v2,v3, n1,n2,n3), face.getColor());
+        }
+        return null;
     }
 }

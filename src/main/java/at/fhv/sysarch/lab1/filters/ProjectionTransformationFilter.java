@@ -4,6 +4,7 @@ import at.fhv.sysarch.lab1.obj.Face;
 import at.fhv.sysarch.lab1.obj.FaceWithColor;
 import at.fhv.sysarch.lab1.pipe.Pipe;
 import com.hackoeur.jglm.Mat4;
+import javafx.scene.paint.Color;
 
 public class ProjectionTransformationFilter implements IFilter{
     private Pipe successor;
@@ -41,11 +42,13 @@ public class ProjectionTransformationFilter implements IFilter{
         FaceWithColor face = predecessor.read();
 
         if (face != null) {
-            face = new FaceWithColor(
-                    new Face(projTransform.multiply(face.getFace().getV1()),
-                            projTransform.multiply(face.getFace().getV2()),
-                            projTransform.multiply(face.getFace().getV3()), face.getFace()), face.getColor()
-            );
+            if (face.getColor() != Color.PINK){
+                face = new FaceWithColor(
+                        new Face(projTransform.multiply(face.getFace().getV1()),
+                                projTransform.multiply(face.getFace().getV2()),
+                                projTransform.multiply(face.getFace().getV3()), face.getFace()), face.getColor()
+                );
+            }
         }
         return face;
     }

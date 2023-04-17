@@ -38,7 +38,8 @@ public class Source implements IFilter {
     @Override
     public FaceWithColor read() {
         List<Face> faces = model.getFaces();
-        if (index == faces.size()) {
+        if (index >= faces.size()) {
+            System.out.println("Send Marker Face");
             return new FaceWithColor(new Face(
                     Vec4.VEC4_ZERO,
                     Vec4.VEC4_ZERO,
@@ -49,5 +50,9 @@ public class Source implements IFilter {
             ), Color.PINK);
         }
         return new FaceWithColor(faces.get(index++), null);
+    }
+
+    public void reset() {
+        index = 0;
     }
 }

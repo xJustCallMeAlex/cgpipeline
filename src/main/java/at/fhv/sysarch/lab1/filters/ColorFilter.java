@@ -34,11 +34,9 @@ public class ColorFilter implements IFilter{
         FaceWithColor face = predecessor.read();
 
         if (face != null) {
-            if (color == Color.PINK) {
-                return face;
+            if (face.getColor() != Color.PINK) {
+                face.setColor(color);
             }
-
-            face.setColor(color);
         }
         return face;
     }

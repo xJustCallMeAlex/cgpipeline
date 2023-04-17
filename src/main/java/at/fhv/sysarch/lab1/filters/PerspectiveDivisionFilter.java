@@ -4,6 +4,7 @@ import at.fhv.sysarch.lab1.obj.Face;
 import at.fhv.sysarch.lab1.obj.FaceWithColor;
 import at.fhv.sysarch.lab1.pipe.Pipe;
 import com.hackoeur.jglm.Mat4;
+import javafx.scene.paint.Color;
 
 public class PerspectiveDivisionFilter implements IFilter{
     private Pipe successor;
@@ -42,12 +43,15 @@ public class PerspectiveDivisionFilter implements IFilter{
         FaceWithColor face = predecessor.read();
 
         if (face != null) {
-            face = new FaceWithColor(new Face(
-                    viewPortTransform.multiply(face.getFace().getV1().multiply(1.0f / face.getFace().getV1().getW())),
-                    viewPortTransform.multiply(face.getFace().getV2().multiply(1.0f / face.getFace().getV2().getW())),
-                    viewPortTransform.multiply(face.getFace().getV3().multiply(1.0f / face.getFace().getV3().getW())),
-                    face.getFace()),
-                    face.getColor());
+            if (face.getColor() != Color.PINK){
+                face = new FaceWithColor(new Face(
+                        viewPortTransform.multiply(face.getFace().getV1().multiply(1.0f / face.getFace().getV1().getW())),
+                        viewPortTransform.multiply(face.getFace().getV2().multiply(1.0f / face.getFace().getV2().getW())),
+                        viewPortTransform.multiply(face.getFace().getV3().multiply(1.0f / face.getFace().getV3().getW())),
+                        face.getFace()),
+                        face.getColor()
+                );
+            }
         }
         return face;
     }

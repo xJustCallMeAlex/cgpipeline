@@ -43,11 +43,13 @@ public class LightingFilter implements IFilter{
         FaceWithColor face = predecessor.read();
 
         if (face != null) {
-            float dotProduct = face.getFace().getN1().toVec3().dot(lightPos.getUnitVector());
-            if (dotProduct <= 0) {
-                face.setColor(Color.BLACK);
-            } else {
-                face.setColor(face.getColor().deriveColor(0,1,dotProduct,1));
+            if (face.getColor() != Color.PINK) {
+                float dotProduct = face.getFace().getN1().toVec3().dot(lightPos.getUnitVector());
+                if (dotProduct <= 0) {
+                    face.setColor(Color.BLACK);
+                } else {
+                    face.setColor(face.getColor().deriveColor(0, 1, dotProduct, 1));
+                }
             }
         }
         return face;
