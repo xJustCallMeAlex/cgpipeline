@@ -9,13 +9,14 @@ public class DepthSortingFilter implements IFilter{
 
     @Override
     public void setSuccessor(Pipe successor) {
-        //Empty because it is only used for pull.
+        // NOT IMPLEMENTED
     }
 
     @Override
     public void write(FaceWithColor face) {
-        //Empty because it is only used for pull.
+        // NOT IMPLEMENTED
     }
+
 
     @Override
     public void setPredecessor(Pipe predecessor) {
@@ -26,10 +27,9 @@ public class DepthSortingFilter implements IFilter{
     public FaceWithColor read() {
         FaceWithColor face = predecessor.read();
 
-        if (face == null){
-
+        if (face != null){
+            // Do something
         }
-
         return face;
     }
 }

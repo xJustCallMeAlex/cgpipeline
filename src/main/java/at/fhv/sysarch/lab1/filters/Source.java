@@ -10,10 +10,10 @@ import javafx.scene.paint.Color;
 import java.util.List;
 
 public class Source implements IFilter {
-    private Pipe predecessor;
     private Pipe successor;
     private Model model;
     private int index = 0;
+
 
     public Source(Model model) {
         this.model = model;
@@ -25,13 +25,14 @@ public class Source implements IFilter {
     }
 
     @Override
-    public void setPredecessor(Pipe pipe) {
-        // NOT IMPLEMENTED
-    }
-
-    @Override
     public void write(FaceWithColor face) {
         model.getFaces().forEach(f -> this.successor.write(new FaceWithColor(f, null)));
+    }
+
+
+    @Override
+    public void setPredecessor(Pipe pipe) {
+        // NOT IMPLEMENTED
     }
 
     @Override

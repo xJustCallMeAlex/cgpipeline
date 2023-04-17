@@ -7,7 +7,9 @@ import com.hackoeur.jglm.Mat4;
 
 public class PerspectiveDivisionFilter implements IFilter{
     private Pipe successor;
+    private Pipe predecessor;
     private Mat4 viewPortTransform;
+
 
     public PerspectiveDivisionFilter(Mat4 viewPortTransform) {
         this.viewPortTransform = viewPortTransform;
@@ -27,6 +29,26 @@ public class PerspectiveDivisionFilter implements IFilter{
                         face.getFace()),
                 face.getColor());
         successor.write(newFace);
+    }
 
+
+    @Override
+    public void setPredecessor(Pipe predecessor) {
+        this.predecessor = predecessor;
+    }
+
+    @Override
+    public FaceWithColor read() {
+        FaceWithColor face = predecessor.read();
+
+        if (face != null) {
+            face = new FaceWithColor(new Face(
+                    viewPortTransform.multiply(face.getFace().getV1().multiply(1.0f / face.getFace().getV1().getW())),
+                    viewPortTransform.multiply(face.getFace().getV2().multiply(1.0f / face.getFace().getV2().getW())),
+                    viewPortTransform.multiply(face.getFace().getV3().multiply(1.0f / face.getFace().getV3().getW())),
+                    face.getFace()),
+                    face.getColor());
+        }
+        return face;
     }
 }

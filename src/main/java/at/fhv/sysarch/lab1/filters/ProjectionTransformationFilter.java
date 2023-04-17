@@ -7,7 +7,9 @@ import com.hackoeur.jglm.Mat4;
 
 public class ProjectionTransformationFilter implements IFilter{
     private Pipe successor;
+    private Pipe predecessor;
     private Mat4 projTransform;
+
 
     public ProjectionTransformationFilter(Mat4 projTransform) {
         this.projTransform = projTransform;
@@ -26,5 +28,25 @@ public class ProjectionTransformationFilter implements IFilter{
                         projTransform.multiply(face.getFace().getV3()), face.getFace()), face.getColor()
         );
         successor.write(newFace);
+    }
+
+
+    @Override
+    public void setPredecessor(Pipe predecessor) {
+        this.predecessor = predecessor;
+    }
+
+    @Override
+    public FaceWithColor read() {
+        FaceWithColor face = predecessor.read();
+
+        if (face != null) {
+            face = new FaceWithColor(
+                    new Face(projTransform.multiply(face.getFace().getV1()),
+                            projTransform.multiply(face.getFace().getV2()),
+                            projTransform.multiply(face.getFace().getV3()), face.getFace()), face.getColor()
+            );
+        }
+        return face;
     }
 }

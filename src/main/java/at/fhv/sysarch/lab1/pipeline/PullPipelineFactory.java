@@ -4,6 +4,8 @@ import at.fhv.sysarch.lab1.animation.AnimationRenderer;
 import at.fhv.sysarch.lab1.filters.*;
 import at.fhv.sysarch.lab1.obj.Model;
 import at.fhv.sysarch.lab1.pipe.Pipe;
+import com.hackoeur.jglm.Mat4;
+import com.hackoeur.jglm.Matrices;
 import javafx.animation.AnimationTimer;
 
 public class PullPipelineFactory {
@@ -73,6 +75,7 @@ public class PullPipelineFactory {
         // viewport and computation of the praction
         return new AnimationRenderer(pd) {
             // TODO rotation variable goes in here
+            float rotation = 0;
 
             /** This method is called for every frame from the JavaFX Animation
              * system (using an AnimationTimer, see AnimationRenderer). 
@@ -82,14 +85,20 @@ public class PullPipelineFactory {
             @Override
             protected void render(float fraction, Model model) {
                 // TODO compute rotation in radians
+                rotation += fraction;
+                float radians = (float) (rotation % (2 * Math.PI));
 
                 // TODO create new model rotation matrix using pd.getModelRotAxis and Matrices.rotate
+                Mat4 rotationMatrix = pd.getViewTransform().multiply(pd.getModelTranslation()).multiply(Matrices.rotate(radians, pd.getModelRotAxis()));
 
                 // TODO compute updated model-view tranformation
+                // Done in step above
 
                 // TODO update model-view filter
+                mvTransformationFilter.setTransformation(rotationMatrix);
 
                 // TODO trigger rendering of the pipeline
+                sink.read();
             }
         };
     }

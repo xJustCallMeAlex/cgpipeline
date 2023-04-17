@@ -8,7 +8,9 @@ import javafx.scene.paint.Color;
 
 public class LightingFilter implements IFilter{
     private Pipe successor;
+    private Pipe predecessor;
     private Vec3 lightPos;
+
 
     public LightingFilter(Vec3 lightPos) {
         this.lightPos = lightPos;
@@ -28,5 +30,26 @@ public class LightingFilter implements IFilter{
             face.setColor(face.getColor().deriveColor(0,1,dotProduct,1));
         }
         successor.write(face);
+    }
+
+
+    @Override
+    public void setPredecessor(Pipe predecessor) {
+        this.predecessor = predecessor;
+    }
+
+    @Override
+    public FaceWithColor read() {
+        FaceWithColor face = predecessor.read();
+
+        if (face != null) {
+            float dotProduct = face.getFace().getN1().toVec3().dot(lightPos.getUnitVector());
+            if (dotProduct <= 0) {
+                face.setColor(Color.BLACK);
+            } else {
+                face.setColor(face.getColor().deriveColor(0,1,dotProduct,1));
+            }
+        }
+        return face;
     }
 }

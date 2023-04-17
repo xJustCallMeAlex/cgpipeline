@@ -11,18 +11,14 @@ public class MVTransformationFilter implements IFilter {
     private Pipe predecessor;
     private Mat4 transformation;
 
-    @Override
-    public void setSuccessor(Pipe successor) {
-        this.successor = successor;
-    }
-
-    @Override
-    public void setPredecessor(Pipe predecessor) {
-        this.predecessor = predecessor;
-    }
 
     public void setTransformation(Mat4 transformation) {
         this.transformation = transformation;
+    }
+
+    @Override
+    public void setSuccessor(Pipe successor) {
+        this.successor = successor;
     }
 
     @Override
@@ -36,6 +32,12 @@ public class MVTransformationFilter implements IFilter {
         Face newFace = new Face(v1,v2,v3, n1,n2,n3);
 
         successor.write(new FaceWithColor(newFace, null));
+    }
+
+
+    @Override
+    public void setPredecessor(Pipe predecessor) {
+        this.predecessor = predecessor;
     }
 
     @Override

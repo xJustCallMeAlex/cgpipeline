@@ -33,11 +33,13 @@ public class ColorFilter implements IFilter{
     public FaceWithColor read() {
         FaceWithColor face = predecessor.read();
 
-        if (color == Color.PINK) {
-            return face;
-        }
+        if (face != null) {
+            if (color == Color.PINK) {
+                return face;
+            }
 
-        face.setColor(color);
+            face.setColor(color);
+        }
         return face;
     }
 }
