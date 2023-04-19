@@ -31,7 +31,6 @@ public class ProjectionTransformationFilter implements IFilter{
         successor.write(newFace);
     }
 
-
     @Override
     public void setPredecessor(Pipe predecessor) {
         this.predecessor = predecessor;

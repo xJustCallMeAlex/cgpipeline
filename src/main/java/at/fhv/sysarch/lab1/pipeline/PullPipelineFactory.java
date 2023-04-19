@@ -98,7 +98,6 @@ public class PullPipelineFactory {
                 mvTransformationFilter.setTransformation(rotationMatrix);
 
                 // trigger rendering of the pipeline
-                System.out.println("Animation is being triggered");
                 sink.read();
                 source.reset();
             }

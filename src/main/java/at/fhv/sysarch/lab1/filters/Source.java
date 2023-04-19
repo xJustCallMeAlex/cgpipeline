@@ -39,14 +39,13 @@ public class Source implements IFilter {
     public FaceWithColor read() {
         List<Face> faces = model.getFaces();
         if (index >= faces.size()) {
-            System.out.println("Send Marker Face");
             return new FaceWithColor(new Face(
-                    Vec4.VEC4_ZERO,
-                    Vec4.VEC4_ZERO,
-                    Vec4.VEC4_ZERO,
-                    Vec4.VEC4_ZERO,
-                    Vec4.VEC4_ZERO,
-                    Vec4.VEC4_ZERO
+                    new Vec4(0,0,0,0),
+                    new Vec4(0,0,0,0),
+                    new Vec4(0,0,0,0),
+                    new Vec4(0,0,0,0),
+                    new Vec4(0,0,0,0),
+                    new Vec4(0,0,0,0)
             ), Color.PINK);
         }
         return new FaceWithColor(faces.get(index++), null);
