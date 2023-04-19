@@ -27,6 +27,14 @@ public class Source implements IFilter {
     @Override
     public void write(FaceWithColor face) {
         model.getFaces().forEach(f -> this.successor.write(new FaceWithColor(f, null)));
+        this.successor.write(new FaceWithColor(new Face(
+                new Vec4(0,0,0,0),
+                new Vec4(0,0,0,0),
+                new Vec4(0,0,0,0),
+                new Vec4(0,0,0,0),
+                new Vec4(0,0,0,0),
+                new Vec4(0,0,0,0)
+        ), Color.PINK));
     }
 
 

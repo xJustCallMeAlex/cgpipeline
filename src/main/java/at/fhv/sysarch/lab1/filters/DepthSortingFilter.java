@@ -9,6 +9,7 @@ import java.util.Queue;
 
 public class DepthSortingFilter implements IFilter{
     private Pipe predecessor;
+    private Pipe successor;
     private Queue<FaceWithColor> buffer;
     private boolean isBuffering;
 
@@ -41,12 +42,24 @@ public class DepthSortingFilter implements IFilter{
 
     @Override
     public void setSuccessor(Pipe successor) {
-        // NOT IMPLEMENTED
+        this.successor = successor;
     }
 
     @Override
     public void write(FaceWithColor face) {
-        // NOT IMPLEMENTED
+        if (isBuffering) {
+            if (face != null) {
+                if (face.getColor() == Color.PINK) {
+                    isBuffering = false;
+                }
+                buffer.add(face);
+            }
+        } else {
+            while (buffer.size() >= 1) {
+                successor.write(buffer.poll());
+            }
+            isBuffering = true;
+        }
     }
 
 

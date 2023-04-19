@@ -23,6 +23,10 @@ public class LightingFilter implements IFilter{
 
     @Override
     public void write(FaceWithColor face) {
+        if (face.getColor() == Color.PINK) {
+            successor.write(face);
+            return;
+        }
         float dotProduct = face.getFace().getN1().toVec3().dot(lightPos.getUnitVector());
         if (dotProduct <= 0) {
             face.setColor(Color.BLACK);

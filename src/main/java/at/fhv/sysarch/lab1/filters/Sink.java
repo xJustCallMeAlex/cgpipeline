@@ -26,6 +26,10 @@ public class Sink implements IFilter {
 
     @Override
     public void write(FaceWithColor face) {
+        if (face.getColor() == Color.PINK) {
+            return;
+        }
+
         context.setFill(face.getColor());
         context.setStroke(face.getColor());
 

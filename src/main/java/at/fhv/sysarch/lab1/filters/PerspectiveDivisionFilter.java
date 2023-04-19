@@ -23,6 +23,10 @@ public class PerspectiveDivisionFilter implements IFilter{
 
     @Override
     public void write(FaceWithColor face) {
+        if (face.getColor() == Color.PINK) {
+            successor.write(face);
+            return;
+        }
         FaceWithColor newFace = new FaceWithColor(new Face(
                         viewPortTransform.multiply(face.getFace().getV1().multiply(1.0f / face.getFace().getV1().getW())),
                         viewPortTransform.multiply(face.getFace().getV2().multiply(1.0f / face.getFace().getV2().getW())),

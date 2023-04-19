@@ -25,6 +25,10 @@ public class ColorFilter implements IFilter{
 
     @Override
     public void write(FaceWithColor face) {
+        if (face.getColor() == Color.PINK) {
+            successor.write(face);
+            return;
+        }
         face.setColor(color);
         successor.write(face);
     }

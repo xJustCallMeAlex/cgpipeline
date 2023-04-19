@@ -32,12 +32,15 @@ public class PushPipelineFactory {
         bFCullingFilter.setSuccessor(afterBFCulling);
 
         // 3. perform depth sorting in VIEW SPACE
-        // Only implemented in the Pull Pipeline
+        DepthSortingFilter depthSortingFilter = new DepthSortingFilter();
+        afterBFCulling.setSuccessor(depthSortingFilter);
+        Pipe afterDepthSorting = new Pipe();
+        depthSortingFilter.setSuccessor(afterDepthSorting);
 
         // 4. add coloring (space unimportant)
         // Create the color filter that adds the correct color to each face
         ColorFilter colorFilter = new ColorFilter(pd.getModelColor());
-        afterBFCulling.setSuccessor(colorFilter);
+        afterDepthSorting.setSuccessor(colorFilter);
         Pipe afterColor = new Pipe();
         colorFilter.setSuccessor(afterColor);
 

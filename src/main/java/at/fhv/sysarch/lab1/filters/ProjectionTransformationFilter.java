@@ -23,6 +23,10 @@ public class ProjectionTransformationFilter implements IFilter{
 
     @Override
     public void write(FaceWithColor face) {
+        if (face.getColor() == Color.PINK) {
+            successor.write(face);
+            return;
+        }
         FaceWithColor newFace = new FaceWithColor(
                 new Face(projTransform.multiply(face.getFace().getV1()),
                         projTransform.multiply(face.getFace().getV2()),

@@ -23,6 +23,10 @@ public class MVTransformationFilter implements IFilter {
 
     @Override
     public void write(FaceWithColor face) {
+        if (face.getColor() == Color.PINK) {
+            successor.write(face);
+            return;
+        }
         Vec4 v1 = transformation.multiply(face.getFace().getV1());
         Vec4 v2 = transformation.multiply(face.getFace().getV2());
         Vec4 v3 = transformation.multiply(face.getFace().getV3());

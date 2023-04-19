@@ -17,6 +17,11 @@ public class BFCullingFilter implements IFilter {
 
     @Override
     public void write(FaceWithColor face) {
+        if (face.getColor() == Color.PINK) {
+            successor.write(face);
+            return;
+        }
+
         Vec4 v1 = face.getFace().getV1();
         Vec4 n1 = face.getFace().getN1();
         if (v1.dot(n1) < 0) {
